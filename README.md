@@ -1,9 +1,9 @@
-# chrono
+﻿# chrono
 
-CLI de suivi du temps et de tâches. **Zéro dépendance**, 100 % local, Node ≥ 18.
+CLI de suivi du temps et de tÃ¢ches. **ZÃ©ro dÃ©pendance**, 100 % local, Node â‰¥ 18.
 
-Chrono évite le piège des timers pomodoro qui vous détournent :
-pas de compte, pas de cloud, pas de réseau. Un fichier JSON, et c'est tout.
+Chrono Ã©vite le piÃ¨ge des timers pomodoro qui vous dÃ©tournent :
+pas de compte, pas de cloud, pas de rÃ©seau. Un fichier JSON, et c'est tout.
 
 ```
   Aujourd hui      1h35 (3 sessions)
@@ -33,7 +33,7 @@ node bin/chrono.js stats
 
 ## Utilisation
 
-### Tâches
+### TÃ¢ches
 
 ```bash
 chrono add "Ecrire le rapport trimestriel"
@@ -46,30 +46,30 @@ chrono reopen 1
 chrono rm 1
 ```
 
-`add` refuse les doublons en cours : ajouter `Relire le code` deux fois ne crée
-qu'une tâche.
+`add` refuse les doublons en cours : ajouter `Relire le code` deux fois ne crÃ©e
+qu'une tÃ¢che.
 
 ### Sessions de concentration
 
 ```bash
-chrono start              # démarre sans tâche
-chrono start 1            # démarre sur la tâche #1
-chrono start rapport      # ou sur la tâche dont le titre contient "rapport"
-chrono stop               # enregistre la session et sa durée
+chrono start              # dÃ©marre sans tÃ¢che
+chrono start 1            # dÃ©marre sur la tÃ¢che #1
+chrono start rapport      # ou sur la tÃ¢che dont le titre contient "rapport"
+chrono stop               # enregistre la session et sa durÃ©e
 ```
 
-- Une seule session à la fois : `start` **ferme automatiquement** la précédente.
-- Une session de moins d'une minute n'est pas enregistrée (bruit inutile).
-- `start`/`stop` marche aussi avec zéro tâche : les sessions restent tracées
+- Une seule session Ã  la fois : `start` **ferme automatiquement** la prÃ©cÃ©dente.
+- Une session de moins d'une minute n'est pas enregistrÃ©e (bruit inutile).
+- `start`/`stop` marche aussi avec zÃ©ro tÃ¢che : les sessions restent tracÃ©es
   (`taskId: null`).
 
 ### Analyse
 
 ```bash
-chrono status             # état courant + session en cours
+chrono status             # Ã©tat courant + session en cours
 chrono today              # journal du jour, session par session
-chrono stats              # résumé + graphique
-chrono stats --days 30    # fenêtre plus large (1 à 90)
+chrono stats              # rÃ©sumÃ© + graphique
+chrono stats --days 30    # fenÃªtre plus large (1 Ã  90)
 chrono log --limit 20     # historique des sessions
 ```
 
@@ -80,9 +80,9 @@ chrono log --limit 20     # historique des sessions
 | `-h`, `--help` | aide |
 | `-v`, `--version` | version |
 | `--json` | sortie JSON (pour scripts et pipelines) |
-| `--no-color` | désactive les couleurs |
-| `--days N` | fenêtre d'analyse (bornée à 1–90) |
-| `--limit N` | nombre de sessions renvoyées (borné à 1–200) |
+| `--no-color` | dÃ©sactive les couleurs |
+| `--days N` | fenÃªtre d'analyse (bornÃ©e Ã  1â€“90) |
+| `--limit N` | nombre de sessions renvoyÃ©es (bornÃ© Ã  1â€“200) |
 
 ## Automatiser
 
@@ -102,48 +102,48 @@ chrono log --json --limit 200 | node -e "
 "
 ```
 
-## Données
+## DonnÃ©es
 
 - Emplacement : `~/.chrono/data.json` (Windows : `%USERPROFILE%\.chrono\data.json`)
 - Surcharge : variable d'environnement `CHRONO_HOME`
-- Format : lisible et versionné, écrit de façon atomique (fichier temporaire
-  puis `rename`, donc jamais de `data.json` à moitié écrit)
-- Réparation automatique au chargement : structure partielle, dates invalides
-  et sessions orphelines sont tolérées au lieu de faire planter la commande
+- Format : lisible et versionnÃ©, Ã©crit de faÃ§on atomique (fichier temporaire
+  puis `rename`, donc jamais de `data.json` Ã  moitiÃ© Ã©crit)
+- RÃ©paration automatique au chargement : structure partielle, dates invalides
+  et sessions orphelines sont tolÃ©rÃ©es au lieu de faire planter la commande
 
 ```bash
-CHRONO_HOME=/tmp/essai chrono stats   # données jetables pour un test
+CHRONO_HOME=/tmp/essai chrono stats   # donnÃ©es jetables pour un test
 ```
 
 ## Architecture
 
 ```
-bin/chrono.js     point d'entrée
+bin/chrono.js     point d'entrÃ©e
 src/cli.js        parsing des arguments, dispatch, rendu
-src/logic.js      règles métier (tâches, sessions) — pur, sans E/S
-src/stats.js      agrégations (jour, semaine, série, top tâches) — pur
+src/logic.js      rÃ¨gles mÃ©tier (tÃ¢ches, sessions) â€” pur, sans E/S
+src/stats.js      agrÃ©gations (jour, semaine, sÃ©rie, top tÃ¢ches) â€” pur
 src/store.js      persistance JSON : load, save atomique, normalisation
-src/dates.js      utilitaires de dates locales et de durées
+src/dates.js      utilitaires de dates locales et de durÃ©es
 src/format.js     couleurs et rendu terminal
 ```
 
-Deux règles tenues :
+Deux rÃ¨gles tenues :
 
-1. **La logique ne fait pas d'E/S.** `logic.js` et `stats.js` reçoivent un objet
-   de données et le modifient ; c'est `store.js` qui touche le disque. C'est ce
+1. **La logique ne fait pas d'E/S.** `logic.js` et `stats.js` reÃ§oivent un objet
+   de donnÃ©es et le modifient ; c'est `store.js` qui touche le disque. C'est ce
    qui rend les tests possibles sans mocker quoi que ce soit.
-2. **L'heure est injectée.** Chaque fonction métier reçoit `now = new Date()`,
-   donc les tests sont déterministes.
+2. **L'heure est injectÃ©e.** Chaque fonction mÃ©tier reÃ§oit `now = new Date()`,
+   donc les tests sont dÃ©terministes.
 
-## Développement
+## DÃ©veloppement
 
 ```bash
-npm test                    # 53 tests, node:test natif
+npm test                    # 57 tests, node:test natif
 node --test test/stats.js   # un fichier
 ```
 
-Les tests d'intégration CLI pointent `CHRONO_HOME` vers un dossier temporaire et
-capturent stdout : aucun test ne touche vos vraies données.
+Les tests d'intÃ©gration CLI pointent `CHRONO_HOME` vers un dossier temporaire et
+capturent stdout : aucun test ne touche vos vraies donnÃ©es.
 
 ## Licence
 

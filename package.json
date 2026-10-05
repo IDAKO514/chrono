@@ -1,0 +1,33 @@
+{
+  "name": "chrono",
+  "version": "1.0.0",
+  "description": "CLI local-first de suivi du temps : taches, sessions de concentration et statistiques. Zero dependance.",
+  "type": "module",
+  "bin": {
+    "chrono": "bin/chrono.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "chrono": "node bin/chrono.js"
+  },
+  "keywords": [
+    "cli",
+    "time-tracking",
+    "pomodoro",
+    "productivity",
+    "offline"
+  ],
+  "license": "MIT",
+  "private": true
+}
